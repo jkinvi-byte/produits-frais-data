@@ -13,17 +13,36 @@ Exercice 2 du module Data Analytics (Eugenia School, novembre 2026).
 
 ```bash
 pip install -r requirements.txt
-python src/nettoyage.py
+python src/pipeline.py
 ```
 
-### Comment on travaille à deux sur Git
+### Stratégie Git de l'équipe (le push sans conflit)
 
-| Branche | Rôle |
-|---|---|
-| `main` | La version stable, celle qu'on rend. On n'y travaille jamais directement |
-| `dev` | La branche de travail : chaque modification y est commitée et testée d'abord |
+```
+feature/clean-transaction ──┐
+feature/clean-price ────────┤   PR relue par l'autre
+feature/clean-product ──────┼──────────────────────► develop ──── PR ────► main
+feature/clean-loss-rate ────┘                       (intégration)        (production)
+```
 
-Le cycle : on travaille sur `dev`, on lance `python src/nettoyage.py` pour vérifier que tout passe, puis on fusionne `dev` dans `main` (par une Pull Request relue par l'autre membre du binôme).
+| Branche | Type | Rôle | Responsable |
+|---|---|---|---|
+| `feature/clean-transaction` | Feature | Nettoyage de transaction.csv (`src/clean_transaction.py`) | Jahdiel |
+| `feature/clean-price` | Feature | Nettoyage de price.csv (`src/clean_price.py`) | Jahdiel |
+| `feature/clean-product` | Feature | Nettoyage de product.csv (`src/clean_product.py`) | Jahdiel (pour le binôme) |
+| `feature/clean-loss-rate` | Feature | Nettoyage de loss_rate.csv (`src/clean_loss_rate.py`) | Jahdiel (pour le binôme) |
+| `develop` | Intégration | On y fusionne les 4 features pour tester le pipeline complet | Les deux |
+| `main` | Production | Le code propre et validé, celui qu'on rend | Les deux |
+
+**Pourquoi il n'y a pas de conflit** : chaque branche feature ne modifie **qu'un seul fichier**, son module `clean_*.py`. Deux personnes ne touchent jamais le même fichier en même temps. Le fichier `src/pipeline.py`, qui assemble les 4 modules, n'est modifié que sur `develop`.
+
+**Le cycle** :
+1. Chacun part de `develop` et crée sa branche feature.
+2. Il code son module, lance `python src/pipeline.py`, puis commit et push sur sa branche.
+3. Il ouvre une Pull Request feature → `develop`, **relue et fusionnée par l'autre**.
+4. Quand les 4 features sont dans `develop` et que le pipeline complet passe, une Pull Request `develop` → `main` publie la version finale.
+
+**Règle anti-conflit** : sur une branche feature, on ne commite **que son module** (`git add src/clean_xxx.py`). Le rapport `reports/rapport_qualite.md` change à chaque exécution : il n'est commité que sur `develop`, une fois les features fusionnées.
 
 Les fichiers bruts vont dans `data/raw/`. Ils ne sont **pas versionnés** dans Git : 50 Mo de données n'ont rien à faire dans un dépôt de code (voir `.gitignore`).
 
@@ -108,7 +127,7 @@ dim_produit ──── fait_ventes
 
 ![Pipeline Bronze, Silver, Gold](docs/images/03_pipeline_medaillon.png)
 
-Le script [`src/nettoyage.py`](src/nettoyage.py) fait tout le passage de Bronze à Gold :
+Le script [`src/pipeline.py`](src/pipeline.py), qui assemble les 4 modules `src/clean_*.py`, fait tout le passage de Bronze à Gold :
 
 1. **Chargement** : lecture des 4 CSV, avec `item_code` en texte.
 2. **Nettoyage** : noms de colonnes en français, types corrigés, espaces insécables supprimés, doublons et manquants contrôlés, valeurs aberrantes signalées.
