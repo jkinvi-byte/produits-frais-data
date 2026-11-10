@@ -2,7 +2,7 @@
 
 Exercice 2 du module Data Analytics (Eugenia School, novembre 2026).
 
-**Équipe** : Jahdiel KINVI, Alec DIAMIDIA, [membre 3], [membre 4]
+**Équipe** : Jahdiel KINVI et Alec DIAMIDIA
 **Outils** : Python (pandas), Git, DrawSQL. Script écrit avec l'aide de Claude Code ; chaque contrôle a été relu et vérifié par l'équipe.
 
 **Objectif** : passer des 4 fichiers bruts à un modèle propre et consolidé, qui alimentera le dashboard du Comex. Le cadrage métier vient de l'exercice 1 : CA, marge brute et volume par catégorie, en N et en N-1.
@@ -15,6 +15,15 @@ Exercice 2 du module Data Analytics (Eugenia School, novembre 2026).
 pip install -r requirements.txt
 python src/nettoyage.py
 ```
+
+### Comment on travaille à deux sur Git
+
+| Branche | Rôle |
+|---|---|
+| `main` | La version stable, celle qu'on rend. On n'y travaille jamais directement |
+| `dev` | La branche de travail : chaque modification y est commitée et testée d'abord |
+
+Le cycle : on travaille sur `dev`, on lance `python src/nettoyage.py` pour vérifier que tout passe, puis on fusionne `dev` dans `main` (par une Pull Request relue par l'autre membre du binôme).
 
 Les fichiers bruts vont dans `data/raw/`. Ils ne sont **pas versionnés** dans Git : 50 Mo de données n'ont rien à faire dans un dépôt de code (voir `.gitignore`).
 
