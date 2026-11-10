@@ -29,8 +29,8 @@ feature/clean-loss-rate ────┘                       (intégration)    
 |---|---|---|---|
 | `feature/clean-transaction` | Feature | Nettoyage de transaction.csv (`src/clean_transaction.py`) | Jahdiel |
 | `feature/clean-price` | Feature | Nettoyage de price.csv (`src/clean_price.py`) | Jahdiel |
-| `feature/clean-product` | Feature | Nettoyage de product.csv (`src/clean_product.py`) | Alec |
-| `feature/clean-loss-rate` | Feature | Nettoyage de loss_rate.csv (`src/clean_loss_rate.py`) | Alec |
+| `feature/clean-product` | Feature | Nettoyage de product.csv (`src/clean_product.py`) | Jahdiel (pour le binôme) |
+| `feature/clean-loss-rate` | Feature | Nettoyage de loss_rate.csv (`src/clean_loss_rate.py`) | Jahdiel (pour le binôme) |
 | `develop` | Intégration | On y fusionne les 4 features pour tester le pipeline complet | Les deux |
 | `main` | Production | Le code propre et validé, celui qu'on rend | Les deux |
 
