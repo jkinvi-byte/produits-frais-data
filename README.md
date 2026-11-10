@@ -42,6 +42,8 @@ feature/clean-loss-rate ────┘                       (intégration)    
 3. Il ouvre une Pull Request feature → `develop`, **relue et fusionnée par l'autre**.
 4. Quand les 4 features sont dans `develop` et que le pipeline complet passe, une Pull Request `develop` → `main` publie la version finale.
 
+**Règle anti-conflit** : sur une branche feature, on ne commite **que son module** (`git add src/clean_xxx.py`). Le rapport `reports/rapport_qualite.md` change à chaque exécution : il n'est commité que sur `develop`, une fois les features fusionnées.
+
 Les fichiers bruts vont dans `data/raw/`. Ils ne sont **pas versionnés** dans Git : 50 Mo de données n'ont rien à faire dans un dépôt de code (voir `.gitignore`).
 
 ```
